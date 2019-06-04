@@ -1,0 +1,108 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: 'School API'
+  description: 'Hammer mega geile krasse API xX420-69-BlazeIt'
+basePath: '/v1'
+schemes: 
+- http
+- https
+tags: 
+- name: 'Location'
+  description: 'All routes to locations'
+produces: 
+- 'application/json'
+consumes: 
+- 'application/json'
+paths:
+  '/location':
+    post:
+      tags: 
+      - 'Location'
+      summary: 'Add a location to database'
+      operationId: 'createLocation'
+      consumes: 
+      - 'application/x-www-form-urlencoded'
+      parameters: 
+      - name: 'client'
+        in: 'formData'
+        type: 'string'
+        required: true
+      - name: 'accuracy'
+        in: 'formData'
+        type: 'number'
+      - name: 'altitude'
+        in: 'formData'
+        type: 'number'
+      - name: 'altitudeAccuracy'
+        in: 'formData'
+        type: 'number'
+      - name: 'heading'
+        in: 'formData'
+        type: 'number'
+      - name: 'latitude'
+        in: 'formData'
+        type: 'number'
+      - name: 'longitude'
+        in: 'formData'
+        type: 'number'
+      - name: 'speed'
+        in: 'formData'
+        type: 'number'
+      - name: 'timestamp'
+        in: 'formData'
+        type: 'number'
+      responses:
+        200:
+          description: '200 OK'
+          schema:
+            $ref: '#/definitions/BackendLocation'
+      x-swagger-router-controller: 'Location'
+  '/location/{client}':
+    get:
+      tags: 
+      - 'Location'
+      summary: 'Get all client locations'
+      operationId: 'getLocations'
+      parameters: 
+      - name: 'client'
+        in: 'path'
+        type: 'string'
+        required: true
+      responses:
+        200:
+          description: '200 OK'
+          schema:
+            type: 'array'
+            items:
+             $ref: '#/definitions/BackendLocation'
+      x-swagger-router-controller: 'Location'
+definitions:
+  BackendLocation:
+    type: 'object'
+    properties:
+      _id:
+        type: 'string'
+      client:
+        type: 'string'
+      coords:
+        $ref: '#/definitions/BackendLocationCoords'
+      timestamp:
+        type: 'number'
+  BackendLocationCoords:
+    type: 'object'
+    properties:
+      accuracy:
+        type: 'number'
+      altitude:
+        type: 'number'
+      altitudeAccuracy:
+        type: 'number'
+      heading:
+        type: 'number'
+      latitude:
+        type: 'number'
+      longitude:
+        type: 'number'
+      speed:
+        type: 'number'
